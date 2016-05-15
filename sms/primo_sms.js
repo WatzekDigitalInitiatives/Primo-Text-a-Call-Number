@@ -1,7 +1,97 @@
 // JavaScript Document
 
 // set this to be the URL for the SMS script
-var smsurl = "http://library.pdx.edu/primo/sms/sms.php?";
+var smsurl = "http://library.lclark.edu/primo/sms/sms.php?";
+
+
+jQuery( document ).ready(function(jQuery) {
+	// Handler for .ready() called.
+	if (EXLTA_isFullDisplay() === true) {
+	
+		console.log("full display");
+		var id=$(".EXLResultStatusAvailable").html();
+		//alert(id);
+		
+		var title=$(".EXLResultTitle").text();
+		//alert(title);
+		
+		var cn=$(".EXLAvailabilityCallNumber").text();
+		//alert(cn);
+		update_actions_menu(jQuery(this).find("ol"));
+		
+	
+	}
+	
+	
+	
+	
+	// text call number
+	jQuery(".EXLTabHeaderButtonSendTo").click(function() {
+		 console.log("action menu clicked...");
+		update_actions_menu(jQuery(this).children("ol"));
+	});
+	
+	jQuery( document ).ajaxComplete(function() {
+		// console.log("Triggered ajaxComplete handler.");
+		// reset click hook
+		jQuery(".EXLTabHeaderButtonSendTo").off('click');
+		jQuery(".EXLTabHeaderButtonSendTo").click(function() {
+			 console.log("action menu clicked...");
+			// console.dir(this);
+			update_actions_menu(jQuery(this).find("ol"));
+		});
+	});
+});
+
+function update_actions_menu(obj)
+{
+	// find result id
+	var parent_tr = jQuery(obj).parent().parent().parent().parent().parent().parent().parent();
+	// console.log(parent_tr);
+	
+	var sms_result_id = "";
+	if(parent_tr.length == 0)
+		sms_result_id = "";
+	else
+		sms_result_id = (parent_tr[0].rowIndex  - 1);
+
+	// console.log("result: " + sms_result_id);
+	
+	var count = 0;
+	while(jQuery('#TextCallNumber'+sms_result_id).length != 0)
+	{
+		// console.log("removing...");
+		jQuery('#TextCallNumber'+sms_result_id).remove();
+		count++;
+		if(count > 4)
+			break;
+	}
+	
+	var availability = "";
+	 console.log("sms_result_id: " + sms_result_id);
+	if(sms_result_id >= 0)
+		availability = jQuery("#RTADivTitle_"+sms_result_id).text().trim();
+	else
+		availability = jQuery(".EXLResultStatusAvailable").text().trim();
+
+	 console.log("availablity... " + availability);	
+	
+	//sms_result_id="CP71166922950001451";
+	//sms_result_id=1;
+	
+	
+		
+	if (availability.indexOf("Available at") >= 0)
+	{
+		// console.log("adding sms action item...");
+		obj.append('<li id="TextCallNumber'+sms_result_id+'" class="EXLButtonSendToDelicious"><a href="javascript:showsms2('+sms_result_id+');"><span class="EXLButtonSendToLabel">Send via text</span><span class="EXLButtonSendToIcon EXLButtonSendToIconRISPushTo"></span></a></li>');
+	}
+	else
+		console.log("no availability info, so not adding sms action...");
+}
+
+
+
 
 function showsms(sms_result_id) {
    
@@ -76,6 +166,40 @@ function showsms(sms_result_id) {
 	//return false;
 	//e.preventDefault();
 }
+
+function showsms2(sms_result_id){
+
+		if(sms_result_id >= 0)
+			availability = $("#RTADivTitle_"+sms_result_id).text().trim();
+		else
+			availability = $(".EXLResultStatusAvailable").text().trim();
+		//alert(availability);
+
+			if(sms_result_id >= 0)
+		{
+			$(".EXLResultTitle").each(function( index ){
+				if(index == sms_result_id)
+				{
+					title = $(this).text().trim();
+				}
+			});
+		}
+		else
+		{
+			$(".EXLResultTitle").each(function( index ){
+				title = $(this).text().trim();
+			});
+		}
+		//alert(title);
+		
+		url="http://library.lclark.edu/primo/sms/sms.php?";
+		url += "&title="+encodeURIComponent(title);
+		url += "&availability="+encodeURIComponent(availability);
+	
+    window.open(url, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+
+}
+
 
 
 function sendSMS(location) {

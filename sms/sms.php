@@ -1,5 +1,9 @@
 <?php
 
+var_dump($_GET);
+exit();
+
+/*
 require_once("config.php");
 require_once("Mail.php");
 require_once("Mail/mime.php");
@@ -85,5 +89,5 @@ if(strlen($phoneNumber) == 10) { //does the phone have 10 digits
 }
 
 echo "alert('ERROR: Message not sent!!');";
-
+*/
 ?>
