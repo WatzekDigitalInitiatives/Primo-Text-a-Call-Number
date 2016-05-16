@@ -8,15 +8,6 @@ jQuery( document ).ready(function(jQuery) {
 	// Handler for .ready() called.
 	if (EXLTA_isFullDisplay() === true) {
 	
-		console.log("full display");
-		var id=$(".EXLResultStatusAvailable").html();
-		//alert(id);
-		
-		var title=$(".EXLResultTitle").text();
-		//alert(title);
-		
-		var cn=$(".EXLAvailabilityCallNumber").text();
-		//alert(cn);
 		update_actions_menu(jQuery(this).find("ol"));
 		
 	
