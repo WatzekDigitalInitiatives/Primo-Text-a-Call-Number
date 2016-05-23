@@ -1,7 +1,121 @@
 <?php
 
-var_dump($_GET);
-exit();
+//var_dump($_GET);
+
+if (isset($_POST["sendtext"])){
+
+	sendtext();
+
+
+}
+else{
+
+form();
+}
+
+
+
+?>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Text a call number</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+<style>
+body{padding: 15px;}
+
+</style>
+
+  </head>
+  <body>
+ 
+	<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+<?php
+
+
+
+function form(){
+
+?>
+
+
+<div id="sms" style="visibility: visible; display: block;">
+<div id="smstop">Send the title, location, call number and permalink of this item to your mobile device</div>
+<div id="smsmain">
+<div id="smsinput">
+<form name="sms_form" method="post" action="">
+<p>
+<b>Title</b>:<?= $_GET["title"] ?></p>
+<input type="hidden" name="title" value="<?= $_GET["title"] ?>">
+<input type="hidden" name="record_id" value="CP71115076560001451">
+<input type="hidden" name="sendtext" value="true">
+<p style="padding:5px 0;">
+<b>Enter your cell phone #</b>: <input name="phone" type="text"></p>
+<p style="padding:5px 0;"><b>Select your provider:</b> 
+<select name="provider">
+	<option value="cingular">AT&amp;T</option>
+	<option value="cricket">Cricket</option>
+	<option value="sprint">Sprint</option>
+	<option value="tmobile">T-Mobile</option>
+	<option value="verizon">Verizon</option>
+	<option value="virgin">Virgin</option>
+	</select>
+</p>
+	<p></p>
+	<ol>
+	<li style="margin-left:30px; margin-bottom:10px;">
+	<input checked="1" type="radio" name="loc" value="<?= $_GET["availability"] ?>"> <?= $_GET["availability"] ?></li>
+	</ol>
+	<p style="padding:5px 0;"><strong>NOTE:</strong> Carrier charges may apply if your cell phone service plan does not include free text messaging.</p>
+	<p style="margin: 10px 0; text-align:center;">
+	
+	<input type="submit" class="btn btn-info" value="Submit Button">
+	
+	<!--<a href="#here" id="sendmessage" class="smsbutton" onclick="sendSMS();return false;">Send Text</a>&nbsp;&nbsp;<a href="#here" class="smsbutton" id="clearmessage" onclick="clearsms();return false;">Cancel</a>-->
+	</p>
+	</form>
+	</div>
+
+	</div>
+	</div> 
+
+
+<?php
+
+}
+
+
+function sendtext(){
+
+echo "send text!!";
+
+
+
+
+}
+
+
+
+
+
 
 /*
 require_once("config.php");
